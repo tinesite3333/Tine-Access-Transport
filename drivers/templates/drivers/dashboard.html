@@ -1,3 +1,4 @@
+driver dashboard.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,6 +76,22 @@
             font-size: 16px;
             color: #444;
         }
+        .profile-pic {
+            display: block;
+            margin: 0 auto 20px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .license-img {
+            display: block;
+            max-width: 300px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
         .booking-list {
             list-style: none;
             padding: 0;
@@ -121,6 +138,18 @@
         .btn-danger:hover {
             background-color: #b71c1c;
         }
+        .btn-arrived {
+            background-color: #1976d2;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .btn-arrived:hover {
+            background-color: #0d47a1;
+        }
     </style>
 </head>
 <body>
@@ -143,6 +172,22 @@
         {% if profile %}
         <div class="profile-info">
             <h2>Your Profile Information</h2>
+
+            {% if profile.profile_picture %}
+                <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="profile-pic">
+            {% else %}
+                <p style="text-align:center; color: gray;">No profile picture uploaded.</p>
+            {% endif %}
+
+          <!-- Display License Image -->
+           {% if profile.driver_license %}
+            <h3>Driver License:</h3>
+         <img src="{{ profile.driver_license.url }}" alt="Driver License" class="license-img">
+            {% else %}
+        <p style="text-align:center; color: gray;">No driver license uploaded.</p>
+            {% endif %}
+
+
             <p><strong>Name:</strong> {{ profile.user.get_full_name|default:profile.user.username }}</p>
             <p><strong>Contact Number:</strong> {{ profile.contact_number|default:"Not provided" }}</p>
             <p><strong>Vehicle Type:</strong> {{ profile.vehicle_type|default:"Not provided" }}</p>
@@ -173,12 +218,11 @@
                         </form>
                     {% endif %}
                     {% if booking.status == 'Approved' %}
-    <form method="POST" action="{% url 'bookings:mark_arrived' booking.id %}">
-        {% csrf_token %}
-        <button type="submit" class="btn-arrived">Mark as Arrived Safely</button>
-    </form>
-{% endif %}
-
+                        <form method="POST" action="{% url 'bookings:mark_arrived' booking.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-arrived">Mark as Arrived Safely</button>
+                        </form>
+                    {% endif %}
                 </div>
                 {% endfor %}
             {% else %}
@@ -187,5 +231,4 @@
         </div>
     </div>
 </body>
-</html> 
-{{ form.as_p }}
+</html>

@@ -49,6 +49,7 @@ def edit_profile_view(request):
             return redirect('pwds:dashboard')
     else:
         form = PWDProfileForm(instance=profile)
+    return render(request, 'pwds/edit_profile.html', {'form': form})
 
 @login_required
 def accept_booking(request, booking_id):
