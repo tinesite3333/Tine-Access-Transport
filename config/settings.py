@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-ung^1^)s6a7!kf!w(-rwck9_i(@pz#2jr^@4eu(ndrsf9l^2a(
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['website-for-pwd-2.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['tine-access-transport.onrender.com', 'localhost', '127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
